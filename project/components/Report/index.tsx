@@ -155,13 +155,12 @@ const Contact = () => {
   };
 
   const handleInputChange = (event) => {
-    const { name, value, type } = event.target;
+    const { name, value, type, checked } = event.target;
 
-    if (type === "checkbox") {
-      setFormValues({ ...formValues, [name]: !formValues[name] });
-    } else {
-      setFormValues({ ...formValues, [name]: value });
-    }
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
   return (
@@ -293,7 +292,7 @@ const Contact = () => {
                           <option>Bank account</option>
                           <option>Phone number</option>
                           <option>Email ID</option>
-                          {/* Add other options */}
+                          
                         </select>
                         
                         <label htmlFor="SelectedOptionDetails" className="mb-3 block text-sm font-medium text-dark dark:text-white">
@@ -347,14 +346,21 @@ const Contact = () => {
                     )}
                     
                     {stepLabel === 'Preview and Submit' && (
-                      <>
-                        {/* Display all data entered by the user */}
-                        <div className="mb-3 block text-sm font-medium text-dark dark:text-white">
-                          Preview:
-                        </div>
-                        <pre className="rounded-md mb-3 border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp">
-                          {JSON.stringify(formValues, null, 2)}
-                        </pre>
+                        <>
+     <div className="mb-3 block text-sm font-medium text-dark dark:text-white">Details Filled</div>
+    <pre className="rounded-md mb-3 border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp">
+      
+    <div className="mb-2">Category: {formValues.Category || 'Not provided'}</div>
+    <div className="mb-2">Date: {formValues.Date || 'Not provided'}</div>
+    <div className="mb-2">District: {formValues.District || 'Not provided'}</div>
+    <div className="mb-2">Police Station: {formValues.PoliceStation || 'Not provided'}</div>
+    <div className="mb-2">Suspect Name: {formValues.SuspectName || 'Not provided'}</div>
+    <div className="mb-2">Suspect Info Type: {formValues.SuspectInfoType || 'Not provided'}</div>
+    <div className="mb-2">Suspect Data : {formValues.SelectedOptionDetails || 'Not provided'}</div>
+    <div className="mb-2">Other Info: {formValues.OtherInfo || 'Not provided'}</div>
+    <div className="mb-2">Map: {formValues.MapLink || 'Not provided'}</div>
+    <div className="mb-2">Photo: {formValues.SuspectPhoto ? 'Image uploaded' : 'No image uploaded'}</div>
+    </pre>
                         
                         <label htmlFor="Captcha" className="mb-3 block text-sm font-medium text-dark dark:text-white">
                           Captcha *
@@ -368,7 +374,7 @@ const Contact = () => {
                           className="w-full rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
                         />
                         
-                        <label className="flex items-center mb-3 block text-sm font-medium text-dark dark:text-white">
+                        <label className="flex mt-3 items-center mb-3 block text-sm font-medium text-dark dark:text-white">
                           <input
                             type="checkbox"
                             name="Acknowledgement"
@@ -395,22 +401,23 @@ const Contact = () => {
                     Previous
                   </button>
                 )}
-                {currentStep < 2 ? (
-                  <button
-                    type="button"
-                    onClick={() => nextPrev(1)}
-                    className="rounded-md bg-primary text-white px-3 py-1 rounded-md"
-                  >
-                    Next
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    className="rounded-md bg-primary py-4 px-9 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp"
-                  >
-                    Submit Ticket
-                  </button>
-                )}
+                {currentStep == 3 ? (
+                <button
+                 type="submit"
+                  className="rounded-md bg-primary py-4 px-9 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp"
+                >
+                Submit Ticket
+                </button>
+) : (
+  <button
+    type="button"
+    onClick={() => nextPrev(1)}
+    className="rounded-md bg-primary text-white px-3 py-1 rounded-md"
+  >
+    Next
+  </button>
+)}
+
               </div>
             </form>
           </div>
