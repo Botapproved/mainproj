@@ -6,7 +6,7 @@ const RecoverPage = () => {
   return (
     <>
       <Breadcrumb
-        pageName="Anonymous Crime Report Submission"
+        pageName="Anonymous De-addiction Program"
         description="Complete Anonymity and Privacy"
       />
 

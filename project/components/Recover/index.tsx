@@ -8,20 +8,21 @@ const Recover = () => {
     Category: "",
     Date: "",
     District: "",
-    PoliceStation: "",
-    SuspectName: "",
-    SuspectInfoType: "",
-    SelectedOptionDetails: "",
-    SuspectPhoto: "",
-    MapLink: "",
+    Usage: "",
+    Reason: "",
+    Quit: "",
+    Challenges: "",
+    UseGroup: "",
+    Law: "",
+    
     OtherInfo: "",
     Captcha: "",
     Acknowledgement: false,
   });
 
   const formCategories = [
-    "Complaint and Incident Details",
-    "Suspect Details",
+    "Drug Usage Details",
+    "More About You",
     "Preview and Submit",
   ];
 
@@ -122,30 +123,9 @@ const Recover = () => {
         ]
     };
 
-  // Function to populate police station options based on selected district
-  const populatePoliceStations = () => {
-    const selectedDistrict = formValues.District;
-    const stations = policeStations[selectedDistrict] || [];
-    setFormValues({ ...formValues, PoliceStation: "" }); // Clear current options
-    setPoliceStationOptions(stations);
-  }
+  
 
-  useEffect(() => {
-    populatePoliceStations();
-  }, [formValues.District]);
-
-  const setPoliceStationOptions = (stations) => {
-    const policeStationSelect = document.getElementById("PoliceStation");
-    if (policeStationSelect) {
-      policeStationSelect.innerHTML = "<option value='' selected>--Select Police Station--</option>";
-      stations.forEach((station) => {
-        const option = document.createElement("option");
-        option.value = station;
-        option.text = station;
-        policeStationSelect.appendChild(option);
-      });
-    }
-  }
+  
  
   const nextPrev = (step) => {
     const newStep = currentStep + step;
@@ -169,10 +149,10 @@ const Recover = () => {
         <div className="w-full lg:w-7/12 xl:w-8/12">
           <div className="wow fadeInUp mb-12 rounded-md bg-primary/[3%] py-11 px-8 dark:bg-dark sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px]" data-wow-delay=".15s">
             <h2 className="mb-3 text-2xl font-bold text-black dark:text-white sm:text-3xl lg:text-2xl xl:text-3xl">
-              Report anonymously
+              Register & Recover anonymously
             </h2>
             <p className="mb-12 text-base font-medium text-body-color">
-              Admins will look into your tip-off and allot an incentive based on the report relevance
+              
             </p>
             <div className="form-header flex gap-3 mb-4 text-xs text-center">
               {formCategories.map((stepLabel, index) => (
@@ -189,10 +169,10 @@ const Recover = () => {
               {formCategories.map((stepLabel, index) => (
                 currentStep === index && (
                   <div key={index} className="mb-8">
-                    {stepLabel === 'Complaint and Incident Details' && (
+                    {stepLabel === 'Drug Usage Details' && (
                       <>
                         <label htmlFor="Category" className="mb-3 block text-sm font-medium text-dark dark:text-white">
-                          Category *
+                          What drug type do you use?
                         </label>
                         <select
                           name="Category"
@@ -203,14 +183,15 @@ const Recover = () => {
                           className="w-full mb-3 rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
                         >
                           <option value="" disabled selected>--Select Category--</option>
-                          <option>Smuggling</option>
-                          <option>Posession</option>
-                          <option>Buying / Selling</option>
-                          <option>Production / Manufacture</option>
+                          <option>Cocaine</option>
+                          <option>Heroin</option>
+                          <option>Methamphetamine/MDMA</option>
+                          <option>Marijuana</option>
+                          <option>Prescription Drugs</option>
                         </select>
                         
                         <label htmlFor="Date" className="mb-3 block text-sm font-medium text-dark dark:text-white">
-                          Date *
+                          When did you first start using drugs?
                         </label>
                         <input
                           type="date"
@@ -234,102 +215,117 @@ const Recover = () => {
   className="w-full rounded-md mb-3 border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
 >
   <option value="" disabled>--Select District--</option>
-  {Object.keys(policeStations).map((district) => (
-    <option key={district} value={district}>
-      {district}
-    </option>
-  ))}
-</select>
+  <option value="Alappuzha">Alappuzha</option>
+                    <option value="Ernakulam">Ernakulam</option>
+                    <option value="Idukki">Idukki</option>
+                    <option value="Kannur">Kannur</option>
+                    <option value="Kasaragod">Kasaragod</option>
+                    <option value="Kollam">Kollam</option>
+                    <option value="Kottayam">Kottayam</option>
+                    <option value="Kozhikode">Kozhikode</option>
+                    <option value="Malappuram">Malappuram</option>
+                    <option value="Palakkad">Palakkad</option>
+                    <option value="Pathanamthitta">Pathanamthitta</option>
+                    <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                    <option value="Thrissur">Thrissur</option>
+                    <option value="Wayanad">Wayanad</option>
+                </select>
 
-<label htmlFor="PoliceStation" className="mb-3 block text-sm font-medium text-dark dark:text-white">
-  Police Station *
+
+<label htmlFor="Usage" className="mb-3 block text-sm font-medium text-dark dark:text-white">
+  How often do you use drugs a day?
 </label>
 <select
-  name="PoliceStation"
-  id="PoliceStation"
-  value={formValues.PoliceStation}
+  name="Usage"
+  id="Usage"
+  value={formValues.Usage}
   onChange={handleInputChange}
   required
   className="w-full rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
 >
-  <option value="" selected>--Select Police Station--</option>
-  {formValues.District &&
-    policeStations[formValues.District].map((station) => (
-      <option key={station} value={station}>
-        {station}
-      </option>
-    ))}
+  <option value="" selected>--Select Usage Details--</option>
+  <option>Once</option>
+  <option>Twice</option>
+  <option>Thrice</option>
+  <option>More than 4 times</option>
 </select>
 
                       </>
                     )}
                     
-                    {stepLabel === 'Suspect Details' && (
+                    {stepLabel === 'More About You' && (
                       <>
-                        <label htmlFor="SuspectName" className="mb-3 block text-sm font-medium text-dark dark:text-white">
-                          Suspect name
+                        <label htmlFor="Reason" className="mb-3 block text-sm font-medium text-dark dark:text-white">
+                          What was the reason for you to start using drugs?
                         </label>
                         <input
                           type="text"
-                          name="SuspectName"
-                          id="SuspectName"
-                          value={formValues.SuspectName}
+                          name="Reason"
+                          id="Reason"
+                          value={formValues.Reason}
                           onChange={handleInputChange}
                           className="w-full mb-3 rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
                         />
                         
-                        <label htmlFor="SuspectInfoType" className="mb-3 block text-sm font-medium text-dark dark:text-white">
-                          Suspect information type
+                        <label htmlFor="Quit" className="mb-3 block text-sm font-medium text-dark dark:text-white">
+                          Have you ever tried to quit using drugs before?
                         </label>
                         <select
-                          name="SuspectInfoType"
-                          id="SuspectInfoType"
-                          value={formValues.SuspectInfoType}
+                          name="Quit"
+                          id="Quit"
+                          value={formValues.Quit}
                           onChange={handleInputChange}
                           className="w-full mb-3 rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
                         >
-                          <option value="" selected>--Select type--</option>
-                          <option>Bank account</option>
-                          <option>Phone number</option>
-                          <option>Email ID</option>
+                          <option value="" selected>--Select an Option--</option>
+                          <option>Yes</option>
+                          <option>No</option>
+                        
                           
                         </select>
                         
-                        <label htmlFor="SelectedOptionDetails" className="mb-3 block text-sm font-medium text-dark dark:text-white">
-                          Selected option details
+                        <label htmlFor="Challenges" className="mb-3 block text-sm font-medium text-dark dark:text-white">
+                          What were the challenges you faced when trying to quit drugs in the past?
                         </label>
                         <input
                           type="text"
-                          name="SelectedOptionDetails"
-                          id="SelectedOptionDetails"
-                          value={formValues.SelectedOptionDetails}
+                          name="Challenges"
+                          id="Challenges"
+                          value={formValues.Challenges}
                           onChange={handleInputChange}
                           className="w-full mb-3 rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
                         />
                         
-                        <label htmlFor="SuspectPhoto" className="mb-3 block text-sm font-medium text-dark dark:text-white">
-                          Suspect photo
+                        <label htmlFor="UseGroup" className="mb-3 block text-sm font-medium text-dark dark:text-white">
+                          Do you use drugs alone or with others?
                         </label>
-                        <input
-                          type="file"
-                          name="SuspectPhoto"
-                          id="SuspectPhoto"
-                          accept="image/*"
+                        <select name="UseGroup"
+                          id="UseGroup"
+                          value={formValues.UseGroup}
                           onChange={handleInputChange}
-                          className="w-full mb-3 rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
-                        />
+                          className="w-full mb-3 rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp">
+                           <option value="">Select an option</option>
+                                            <option>Alone</option>
+                                            <option>With others</option>
+                        </select>
                         
-                        <label htmlFor="MapLink" className="mb-3 block text-sm font-medium text-dark dark:text-white">
-                          Map link
+                        <label htmlFor="Law" className="mb-3 block text-sm font-medium text-dark dark:text-white">
+                          Have you ever been in trouble with the law due to drug use?
                         </label>
-                        <input
-                          type="text"
-                          name="MapLink"
-                          id="MapLink"
-                          value={formValues.MapLink}
+                        <select
+                          name="Law"
+                          id="Law"
+                          value={formValues.Law}
                           onChange={handleInputChange}
                           className="w-full mb-3 rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
-                        />
+                        >
+                          <option value="" selected>--Select an Option--</option>
+                          <option>Yes</option>
+                          <option>No</option>
+                        
+                          
+                        </select>
+                        
                         
                         <label htmlFor="OtherInfo" className="mb-3 block text-sm font-medium text-dark dark:text-white">
                           Other info
@@ -353,13 +349,15 @@ const Recover = () => {
     <div className="mb-2">Category: {formValues.Category || 'Not provided'}</div>
     <div className="mb-2">Date: {formValues.Date || 'Not provided'}</div>
     <div className="mb-2">District: {formValues.District || 'Not provided'}</div>
-    <div className="mb-2">Police Station: {formValues.PoliceStation || 'Not provided'}</div>
-    <div className="mb-2">Suspect Name: {formValues.SuspectName || 'Not provided'}</div>
-    <div className="mb-2">Suspect Info Type: {formValues.SuspectInfoType || 'Not provided'}</div>
-    <div className="mb-2">Suspect Data : {formValues.SelectedOptionDetails || 'Not provided'}</div>
+    <div className="mb-2">How often do you use drugs a day?: {formValues.Usage || 'Not provided'}</div>
+    <div className="mb-2">What was the reason for you to start using drugs?: {formValues.Reason || 'Not provided'}</div>
+    <div className="mb-2">Have you ever tried to quit using drugs before?: {formValues.Quit || 'Not provided'}</div>
+    <div className="mb-2">What were the challenges you faced when trying to quit drugs in the past?: {formValues.Challenges || 'Not provided'}</div>
+    <div className="mb-2">Do you use drugs alone or with others?: {formValues.UseGroup || 'Not provided'}</div>
+    <div className="mb-2">Have you ever been in trouble with the law due to drug use?: {formValues.Law || 'Not provided'}</div>
     <div className="mb-2">Other Info: {formValues.OtherInfo || 'Not provided'}</div>
-    <div className="mb-2">Map: {formValues.MapLink || 'Not provided'}</div>
-    <div className="mb-2">Photo: {formValues.SuspectPhoto ? 'Image uploaded' : 'No image uploaded'}</div>
+  
+   
     </pre>
                         
                         <label htmlFor="Captcha" className="mb-3 block text-sm font-medium text-dark dark:text-white">
