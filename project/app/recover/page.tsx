@@ -1,8 +1,8 @@
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import MultiStageForm from "@/components/Report";
-import Form from "@/components/Form";
+import Recover from "@/components/Recover";
 
-const ContactPage = () => {
+
+const RecoverPage = () => {
   return (
     <>
       <Breadcrumb
@@ -10,9 +10,9 @@ const ContactPage = () => {
         description="Complete Anonymity and Privacy"
       />
 
-      <MultiStageForm />
+      <Recover />
     </>
   );
 };
 
-export default ContactPage;
+export default RecoverPage;

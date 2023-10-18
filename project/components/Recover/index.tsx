@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import  "./main.css"
 
-const Report = () => {
+const Recover = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formValues, setFormValues] = useState({
     Category: "",
@@ -427,4 +427,4 @@ const Report = () => {
   );
 };
 
-export default Report;
+export default Recover;
