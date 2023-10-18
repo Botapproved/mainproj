@@ -1,5 +1,5 @@
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import MultiStageForm from "@/components/Form";
+import MultiStageForm from "@/components/Report";
 import Form from "@/components/Form";
 
 const ContactPage = () => {

@@ -1,0 +1,55 @@
+/* Add this CSS to your existing CSS or create a new one */
+#contact .form-header .stepIndicator.active {
+    font-weight: 600;
+}
+
+#contact .form-header .stepIndicator.finish {
+    font-weight: 600;
+    color: #e7e8ea;
+}
+
+#contact .form-header .stepIndicator::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    z-index: 9;
+    width: 20px;
+    height: 20px;
+    background-color: #112b54;
+    border-radius: 50%;
+    border: 3px solid #ebf4ff;
+}
+
+#contact .form-header .stepIndicator.active::before {
+    background-color: #1d4db4;
+    border: 3px solid #0456da;
+}
+
+#contact .form-header .stepIndicator.finish::before {
+    background-color: #5a67d8;
+    border: 3px solid #c3dafe;
+}
+
+#contact .form-header .stepIndicator::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    width: 100%;
+    height: 3px;
+    background-color: #f3f3f3;
+}
+
+#contact .form-header .stepIndicator.active::after {
+    background-color: #a3bffa;
+}
+
+#contact .form-header .stepIndicator.finish::after {
+    background-color: #5a67d8;
+}
+
+#contact .form-header .stepIndicator:last-child:after {
+    display: none;
+}
