@@ -88,9 +88,7 @@ const Report = () => {
     setPoliceStationOptions(stations);
   };
 
-  useEffect(() => {
-    populatePoliceStations();
-  }, [formValues.District]);
+ 
 
   const setPoliceStationOptions = (stations) => {
     const policeStationSelect = document.getElementById("PoliceStation");
