@@ -28,7 +28,7 @@ const Video = () => {
               <div className="relative aspect-[77/40] items-center justify-center">
                 {/* <iframe width="930" height="523" src="https://www.youtube.com/embed/cEZ0FxM8Rxc" title="AI in Drug Liberation Activities KSUM with Hackathon" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> */}
                 <Image src="/images/video/video1.png" alt="video image" fill />
-                <div className="absolute top-0 right-0 flex h-full w-full items-center justify-center">
+                <div className="absolute right-0 top-0 flex h-full w-full items-center justify-center">
                   <button
                     onClick={() => setOpen(true)}
                     className="flex h-[70px] w-[70px] items-center justify-center rounded-full bg-white bg-opacity-75 text-primary transition hover:bg-opacity-100"
@@ -59,7 +59,13 @@ const Video = () => {
       />
 
       <div className="absolute bottom-0 left-0 right-0 z-[-1]">
-        <Image src="/images/video/shape.svg" alt="shape" className="w-full" />
+        <Image
+          src="/images/video/shape.svg"
+          alt="shape"
+          className="w-full"
+          width={220}
+          height={220}
+        />
       </div>
     </section>
   );
