@@ -2,10 +2,19 @@
 import React, { useState, useEffect } from "react";
 import "./main.css";
 import { useRouter } from "next/navigation";
+import app from "@/config/firebaseConfig";
+import {
+  getStorage,
+  uploadBytesResumable,
+  ref,
+  getDownloadURL,
+} from "@firebase/storage";
+
+const storage = getStorage(app);
 
 const Report = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  
+
   const [formValues, setFormValues] = useState({
     Category: "",
     Date: "",
@@ -20,6 +29,7 @@ const Report = () => {
     Captcha: "",
     Acknowledgement: false,
   });
+  console.log(formValues);
   const router = useRouter();
 
   const formCategories = [
@@ -88,14 +98,12 @@ const Report = () => {
     setPoliceStationOptions(stations);
   };
 
- 
-
-  const setPoliceStationOptions = (stations) => {
+  const setPoliceStationOptions = stations => {
     const policeStationSelect = document.getElementById("PoliceStation");
     if (policeStationSelect) {
       policeStationSelect.innerHTML =
         "<option value='' selected>--Select Police Station--</option>";
-      stations.forEach((station) => {
+      stations.forEach(station => {
         const option = document.createElement("option");
         option.value = station;
         option.text = station;
@@ -106,7 +114,7 @@ const Report = () => {
 
   const nextPrev = (step: number) => {
     console.log(step);
-    setCurrentStep((prev) => {
+    setCurrentStep(prev => {
       const newStep = prev + step;
       if (newStep >= 0 && newStep < formCategories.length) {
         return newStep;
@@ -114,10 +122,10 @@ const Report = () => {
     });
   };
 
-  const handleInputChange = (event) => {
+  const handleInputChange = event => {
     const { name, value, type, checked } = event.target;
 
-    setFormValues((prevFormValues) => ({
+    setFormValues(prevFormValues => ({
       ...prevFormValues,
       [name]: type === "checkbox" ? checked : value,
     }));
@@ -155,7 +163,7 @@ const Report = () => {
               ))}
             </div>
             <form
-              onSubmit={(e) => {
+              onSubmit={e => {
                 e.preventDefault();
               }}
             >
@@ -222,7 +230,7 @@ const Report = () => {
                             <option value="" disabled>
                               --Select District--
                             </option>
-                            {Object.keys(policeStations).map((district) => (
+                            {Object.keys(policeStations).map(district => (
                               <option key={district} value={district}>
                                 {district}
                               </option>
@@ -248,7 +256,7 @@ const Report = () => {
                             </option>
                             {formValues.District &&
                               policeStations[formValues.District].map(
-                                (station) => (
+                                station => (
                                   <option key={station} value={station}>
                                     {station}
                                   </option>
@@ -322,8 +330,31 @@ const Report = () => {
                             name="SuspectPhoto"
                             id="SuspectPhoto"
                             accept="image/*"
-                            onChange={handleInputChange}
+                            onChange={async e => {
+                              console.log(e.target.files);
+                              if (!e.target.files?.["0"]) return;
+                              // Create a reference to 'mountains.jpg'
+                              const imgRef = ref(
+                                storage,
+                                Date.now().toString()
+                              );
+                              const res = await uploadBytesResumable(
+                                imgRef,
+                                e.target.files[0]
+                              );
+                              const url = await getDownloadURL(res.ref);
+                              console.log(url);
+                              setFormValues(prev => ({
+                                ...prev,
+                                SuspectPhoto: url,
+                              }));
+                            }}
                             className="mb-3 w-full rounded-md border border-transparent px-6 py-3 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
+                          />
+                          <img
+                            src={`${formValues.SuspectPhoto}`}
+                            className="mb-3 block text-sm font-medium text-dark dark:text-white"
+                            alt=""
                           />
 
                           <label
@@ -452,7 +483,7 @@ const Report = () => {
                   <button
                     type="submit"
                     className="rounded-md bg-primary px-9 py-4 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp"
-                    onClick={(e) => router.replace("/")}
+                    onClick={e => router.replace("/")}
                   >
                     Submit Ticket
                   </button>
