@@ -97,12 +97,17 @@ const Recover = () => {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
-
+  const [submittedUuid, setSubmittedUuid] = useState(null);
   return (
     <>
     <ToastContainer/>
         <section id="contact" className="overflow-hidden py-16 md:py-20 lg:py-28">
-      <div className="container flex h-full items-center justify-center">
+        {submittedUuid && (
+              <div className="mb-3 text-3xl font-medium text-body-colour text-base text-center pb-11">
+                Report submitted successfully - UUID: <b className="text-3xl">{submittedUuid}</b>
+              </div>
+        )}
+      <div id="root" className="container flex h-full items-center justify-center">
         <div className="w-full lg:w-7/12 xl:w-8/12">
           <div
             className="wow fadeInUp mb-12 rounded-md bg-primary/[3%] px-8 py-11 dark:bg-dark sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px]"
@@ -447,11 +452,27 @@ const Recover = () => {
                     onClick={async (e) => {
                       try{
                         const res = await axios.post("/add_survey", formValues);
+                        setSubmittedUuid(res.data.uuid);
                         toast.success(`Report submitted successfully. UUID: ${res.data.uuid}`);
+                        setFormValues({
+                          Category: "",
+                          Date: "",
+                          District: "",
+                          Usage: "",
+                          Reason: "",
+                          Quit: "",
+                          Challenges: "",
+                          UseGroup: "",
+                          Law: "",
+                      
+                          OtherInfo: "",
+                          Captcha: "",
+                          Acknowledgement: false,
+                        })
                       }catch(err){
                         toast.error("Failed to submit report!");
                       }
-
+                      //router.replace("/");
                     }}
                   >
                     Submit Ticket
