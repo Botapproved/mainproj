@@ -1,24 +1,10 @@
-"use client";
-import React, { useState, useEffect } from "react";
+// Consult.tsx
+
+import React from "react";
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import { useRouter } from "next/navigation";
-import app from "@/config/firebaseConfig";
-import {
-  getStorage,
-  uploadBytesResumable,
-  ref,
-  getDownloadURL,
-} from "@firebase/storage";
-import { reportSchema } from "@/utils/transformSchema";
-import { formatObj } from "@/utils/format";
-import axios from "@/config/axiosConfig";
+import VideoConsultation from "@/components/Consult/VideoConsultation"; // Import the new component
 
-const storage = getStorage(app);
-
-const Consult = () => {
-  
-
-  
+const Consult: React.FC = () => {
   return (
     <>
       <Breadcrumb
@@ -43,6 +29,7 @@ const Consult = () => {
           </div>
         </div>
       </section>
+      <VideoConsultation /> {/* Include the VideoConsultation component */}
     </>
   );
 };
