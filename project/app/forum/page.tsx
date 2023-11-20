@@ -1,9 +1,28 @@
-
+"use client"
 import React from "react";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import Forumcard from "@/components/Forumcard"; 
+import axios from "@/config/axiosConfig";
+import { useState, useEffect } from "react";
 
 const Consult: React.FC = () => {
+  const [forumData, setForumData] = useState([]);
+
+  const fetchForumData = async () => {
+    try {
+      const response = await axios.get("/get_forum_data");
+      setForumData(response.data.forums);
+    } catch (error) {
+      console.error("Error fetching forum data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchForumData();
+  }, []);
+
+  console.log(forumData);
+
   return (
     <>
       <Breadcrumb
@@ -11,9 +30,9 @@ const Consult: React.FC = () => {
         description="Complete Anonymity in Reporting"
       />
       <div className="mb-9 mt-9">
-        <Forumcard></Forumcard>
-        <Forumcard></Forumcard>
-        <Forumcard></Forumcard>
+        {forumData.map((forumItem) => (
+          <Forumcard key={forumItem.id} data={forumItem} />
+        ))}
       </div>
     </>
   );
