@@ -140,10 +140,11 @@ const Report = () => {
     <>
       <ToastContainer />
       <section id="contact" className="overflow-hidden py-16 md:py-20 lg:py-28">
-      {submittedUuid && (
-              <div className="mb-3 text-3xl font-medium text-body-colour text-base text-center pb-11">
-                Report submitted successfully - UUID: <b className="text-3xl">{submittedUuid}</b>
-              </div>
+        {submittedUuid && (
+          <div className="text-body-colour mb-3 pb-11 text-center text-3xl text-base font-medium">
+            Report submitted successfully - UUID:{" "}
+            <b className="text-3xl">{submittedUuid}</b>
+          </div>
         )}
         <div className="container flex h-full items-center justify-center">
           <div className="w-full lg:w-7/12 xl:w-8/12">
@@ -155,8 +156,8 @@ const Report = () => {
                 Report anonymously
               </h2>
               <p className="mb-12 text-base font-medium text-body-color">
-                Admins will look into your tip-off and allot an incentive based on
-                the report relevance
+                Admins will look into your tip-off and allot an incentive based
+                on the report relevance
               </p>
               <div className="form-header mb-4 flex gap-3 text-center text-xs">
                 {formCategories.map((stepLabel, index) => (
@@ -175,11 +176,15 @@ const Report = () => {
                 ))}
               </div>
               <form
-                onSubmit={e => {
+                onSubmit={(e) => {
                   e.preventDefault();
                 }}
               >
-                <input type="hidden" name="_next" value="http://localhost:3000" />
+                <input
+                  type="hidden"
+                  name="_next"
+                  value="http://localhost:3000"
+                />
                 {formCategories.map(
                   (stepLabel, index) =>
                     currentStep === index && (
@@ -242,7 +247,7 @@ const Report = () => {
                               <option value="" disabled>
                                 --Select District--
                               </option>
-                              {Object.keys(policeStations).map(district => (
+                              {Object.keys(policeStations).map((district) => (
                                 <option key={district} value={district}>
                                   {district}
                                 </option>
@@ -268,7 +273,7 @@ const Report = () => {
                               </option>
                               {formValues.District &&
                                 policeStations[formValues.District].map(
-                                  station => (
+                                  (station) => (
                                     <option key={station} value={station}>
                                       {station}
                                     </option>
@@ -342,7 +347,7 @@ const Report = () => {
                               name="SuspectPhoto"
                               id="SuspectPhoto"
                               accept="image/*"
-                              onChange={async e => {
+                              onChange={async (e) => {
                                 console.log(e.target.files);
                                 if (!e.target.files?.["0"]) return;
                                 // Create a reference to 'mountains.jpg'
@@ -356,7 +361,7 @@ const Report = () => {
                                 );
                                 const url = await getDownloadURL(res.ref);
                                 console.log(url);
-                                setFormValues(prev => ({
+                                setFormValues((prev) => ({
                                   ...prev,
                                   SuspectPhoto: url,
                                 }));
@@ -408,13 +413,15 @@ const Report = () => {
                             </div>
                             <pre className="mb-3 rounded-md border border-transparent px-6 py-3 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp">
                               <div className="mb-2">
-                                Category: {formValues.Category || "Not provided"}
+                                Category:{" "}
+                                {formValues.Category || "Not provided"}
                               </div>
                               <div className="mb-2">
                                 Date: {formValues.Date || "Not provided"}
                               </div>
                               <div className="mb-2">
-                                District: {formValues.District || "Not provided"}
+                                District:{" "}
+                                {formValues.District || "Not provided"}
                               </div>
                               <div className="mb-2">
                                 Police Station:{" "}
@@ -445,6 +452,11 @@ const Report = () => {
                                 {formValues.SuspectPhoto
                                   ? "Image uploaded"
                                   : "No image uploaded"}
+                                <img
+                                  src={`${formValues.SuspectPhoto}`}
+                                  className="mb-3 block text-sm font-medium text-dark dark:text-white"
+                                  alt=""
+                                />
                               </div>
                             </pre>
 
@@ -472,8 +484,9 @@ const Report = () => {
                                 onChange={handleInputChange}
                                 className="mr-2"
                               />
-                              I acknowledge that providing false information could
-                              make me liable to penal action under Indian laws.
+                              I acknowledge that providing false information
+                              could make me liable to penal action under Indian
+                              laws.
                             </label>
                           </>
                         )}
@@ -495,26 +508,30 @@ const Report = () => {
                     <button
                       type="submit"
                       className="rounded-md bg-primary px-9 py-4 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp"
-                      onClick={async e => {
+                      onClick={async (e) => {
                         //@ts-ignore
                         const result = formatObj(reportSchema, formValues);
                         try {
                           const res = await axios.post("/add_report", result);
                           console.log(res);
                           setSubmittedUuid(res.data.uuid);
-                          toast.success(`Report submitted successfully. UUID: ${res.data.uuid}`);
-                          setFormValues({    Category: "",
-                          Date: "",
-                          District: "",
-                          PoliceStation: "",
-                          SuspectName: "",
-                          SuspectInfoType: "",
-                          SelectedOptionDetails: "",
-                          SuspectPhoto: "",
-                          MapLink: "",
-                          OtherInfo: "",
-                          Captcha: "",
-                          Acknowledgement: false,});
+                          toast.success(
+                            `Report submitted successfully. UUID: ${res.data.uuid}`
+                          );
+                          setFormValues({
+                            Category: "",
+                            Date: "",
+                            District: "",
+                            PoliceStation: "",
+                            SuspectName: "",
+                            SuspectInfoType: "",
+                            SelectedOptionDetails: "",
+                            SuspectPhoto: "",
+                            MapLink: "",
+                            OtherInfo: "",
+                            Captcha: "",
+                            Acknowledgement: false,
+                          });
                         } catch (err) {
                           toast.error("Failed to submit report.");
                         }
