@@ -2,7 +2,9 @@
 import React, { useState, useEffect } from "react";
 import "./main.css";
 import { useRouter } from "next/navigation";
-
+import axios from "@/config/axiosConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Recover = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const router = useRouter();
@@ -97,7 +99,9 @@ const Recover = () => {
   };
 
   return (
-    <section id="contact" className="overflow-hidden py-16 md:py-20 lg:py-28">
+    <>
+    <ToastContainer/>
+        <section id="contact" className="overflow-hidden py-16 md:py-20 lg:py-28">
       <div className="container flex h-full items-center justify-center">
         <div className="w-full lg:w-7/12 xl:w-8/12">
           <div
@@ -440,7 +444,15 @@ const Recover = () => {
                   <button
                     type="submit"
                     className="rounded-md bg-primary px-9 py-4 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp"
-                    onClick={(e) => router.replace("/")}
+                    onClick={async (e) => {
+                      try{
+                        const res = await axios.post("/add_survey", formValues);
+                        toast.success(`Report submitted successfully. UUID: ${res.data.uuid}`);
+                      }catch(err){
+                        toast.error("Failed to submit report!");
+                      }
+
+                    }}
                   >
                     Submit Ticket
                   </button>
@@ -459,6 +471,8 @@ const Recover = () => {
         </div>
       </div>
     </section>
+    </>
+
   );
 };
 
