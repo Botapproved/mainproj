@@ -9,6 +9,9 @@ import {
   ref,
   getDownloadURL,
 } from "@firebase/storage";
+import { reportSchema } from "@/utils/transformSchema";
+import { formatObj } from "@/utils/format";
+import axios from "@/config/axiosConfig";
 
 const storage = getStorage(app);
 
@@ -483,7 +486,18 @@ const Report = () => {
                   <button
                     type="submit"
                     className="rounded-md bg-primary px-9 py-4 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp"
-                    onClick={e => router.replace("/")}
+                    onClick={async e => {
+                      //@ts-ignore
+                      const result = formatObj(reportSchema, formValues);
+                      try {
+                        const res = await axios.post("/add_report", result);
+                        console.log(res);
+                        window.alert(res.data.uuid);
+                      } catch (err) {
+                        window.alert("Failed to submit report.");
+                      }
+                      //router.replace("/");
+                    }}
                   >
                     Submit Ticket
                   </button>
