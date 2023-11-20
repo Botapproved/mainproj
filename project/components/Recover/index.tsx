@@ -102,11 +102,6 @@ const Recover = () => {
     <>
     <ToastContainer/>
         <section id="contact" className="overflow-hidden py-16 md:py-20 lg:py-28">
-        {submittedUuid && (
-              <div className="mb-3 text-3xl font-medium text-body-colour text-base text-center pb-11">
-                Report submitted successfully - UUID: <b className="text-3xl">{submittedUuid}</b>
-              </div>
-        )}
       <div id="root" className="container flex h-full items-center justify-center">
         <div className="w-full lg:w-7/12 xl:w-8/12">
           <div
@@ -406,7 +401,7 @@ const Recover = () => {
                             htmlFor="Captcha"
                             className="mb-3 block text-sm font-medium text-dark dark:text-white"
                           >
-                            Captcha *
+                            Captcha <i>(ABC123)</i> *
                           </label>
                           <input
                             type="text"
@@ -454,21 +449,21 @@ const Recover = () => {
                         const res = await axios.post("/add_survey", formValues);
                         setSubmittedUuid(res.data.uuid);
                         toast.success(`Report submitted successfully. UUID: ${res.data.uuid}`);
-                        setFormValues({
-                          Category: "",
-                          Date: "",
-                          District: "",
-                          Usage: "",
-                          Reason: "",
-                          Quit: "",
-                          Challenges: "",
-                          UseGroup: "",
-                          Law: "",
+                        // setFormValues({
+                        //   Category: "",
+                        //   Date: "",
+                        //   District: "",
+                        //   Usage: "",
+                        //   Reason: "",
+                        //   Quit: "",
+                        //   Challenges: "",
+                        //   UseGroup: "",
+                        //   Law: "",
                       
-                          OtherInfo: "",
-                          Captcha: "",
-                          Acknowledgement: false,
-                        })
+                        //   OtherInfo: "",
+                        //   Captcha: "",
+                        //   Acknowledgement: false,
+                        // })
                       }catch(err){
                         toast.error("Failed to submit report!");
                       }
@@ -488,6 +483,22 @@ const Recover = () => {
                 )}
               </div>
             </form>
+            {submittedUuid && (
+              <div className="mb-3 text-3xl font-medium text-body-colour text-base pb-11 pt-6">
+                Report submitted successfully - UUID: <b className="text-3xl alert"
+                      style={{
+                        display: "block",
+                        padding: "0.75rem 1.25rem",
+                        marginBottom: "1rem",
+                        border: "1px solid transparent",
+                        borderRadius: "0.25rem",
+                        color: "#155724",
+                        backgroundColor: "#d4edda",
+                        borderColor: "#c3e6cb",
+                      }}
+                >{submittedUuid}</b>
+              </div>
+            )}
           </div>
         </div>
       </div>
