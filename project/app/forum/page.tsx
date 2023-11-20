@@ -7,8 +7,8 @@ const Consult: React.FC = () => {
   return (
     <>
       <Breadcrumb
-        pageName="Video Consultation for Recovery"
-        description="Complete Anonymity in Therapy"
+        pageName="Forum: Find All Approved Tip-offs"
+        description="Complete Anonymity in Reporting"
       />
       <div className="mb-9 mt-9">
         <Forumcard></Forumcard>

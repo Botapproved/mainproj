@@ -6,8 +6,8 @@ return (
   <>
     <div className="mb-5 flex  items-center justify-center">
       {" "}
-      <div className="w-10/12 rounded-xl border bg-black p-5 shadow-md">
-        <div className="flex w-full items-center justify-between border-b pb-3">
+      <div className="w-10/12 rounded-xl border shadow-2xl border-body-color/[.10] bg-black p-5 ">
+        <div className="flex w-full items-center justify-between border-b border-body-color pb-3">
           <div className="flex items-center space-x-3">
             <div className="bg-slate-400 h-8 w-8 rounded-full bg-[url('https://i.pravatar.cc/32')]"></div>
             <div className="text-slate-700 text-lg font-bold">semboi</div>
@@ -20,7 +20,7 @@ return (
           </div>
         </div>
 
-        <div className="mb-6 mt-4">
+        <div className="mb-6 mt-4 ">
           <div className="mb-3 text-xl font-bold">
             Nulla sed leo tempus, feugiat velit vel, rhoncus neque?
           </div>
@@ -74,7 +74,7 @@ return (
           </div>
         </div>
 
-        <div className="text-primary text-md  mt-3 font-bold">Grant:</div>
+        <div className="text-md mt-3  font-bold text-primary">Grant:</div>
       </div>
     </div>
   </>
