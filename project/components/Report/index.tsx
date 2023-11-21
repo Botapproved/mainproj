@@ -523,6 +523,7 @@ const Report = () => {
                           // Captcha: "",
                           // Acknowledgement: false,});
                         } catch (err) {
+                          console.log(err);
                           toast.error("Failed to submit report.");
                         }
                         //router.replace("/");
